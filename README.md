@@ -60,6 +60,7 @@ python3 advanced_scanner.py -t 10.0.0.0/24 -p top1000 --threads 1000 --type syn
 python3 advanced_scanner.py -t scanme.nmap.org -p 1-1000 --type udp
 
 📋 Full Command Reference
+
 python3 advanced_scanner.py -h
 
 usage: advanced_scanner.py [-h] -t TARGET [-p PORTS] [--threads THREADS] [--type TYPE]
