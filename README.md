@@ -39,17 +39,18 @@ Examples
    python main.py -t example.com -p 1-65535 --threads 500
    
 Options
-Option	       |         Description	           |   Default
 
--t,--target	  |       IP address or CIDR	      |   Required
+Option	      |         Description	           |   Default
 
--p, --ports	  |         Port range	            |     1-1024
+-t,--target	  |      IP address or CIDR	       |  Required
 
---threads	    |       Number of threads	       |       200
+-p, --ports	  |         Port range	           |   1-1024
 
---type        |      	tcp, udp, or syn	        |       tcp
+--threads	    |       Number of threads	       |    200
 
---timeout	    |       Socket timeout           |      	1.0
+--type        |       tcp, udp, or syn	       |    tcp
 
---rate-limit  |    	Delay between scans        |      	0.01
+--timeout	    |       Socket timeout           |   	1.0
+
+--rate-limit  |    	Delay between scans        |    0.01
 
