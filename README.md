@@ -46,7 +46,9 @@ Prerequisites
 
 INSTALLATION
 git clone https://github.com/noobuser978-gif/advanced-port-scanner.git
+
 cd advanced-port-scanner
+
 pip3 install -r requirements.txt  # No external dependencies!
 
 Basic Usage
