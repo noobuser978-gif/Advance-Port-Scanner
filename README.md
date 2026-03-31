@@ -1,65 +1,55 @@
- 🛡️ Advanced Port Scanner
-v2.0 | A fast, multi-threaded Python scanner with service detection.
+Advanced Port Scanner
+Multi-threaded port scanner with service detection and multiple output formats.
 
-PythonLicense
+Features
+-TCP, UDP, and SYN scans
 
-⚡ Features
+-Multi-threaded with configurable threads
 
-Multi-Protocol: Supports TCP Connect, SYN Stealth, and UDP scans.
+-Service detection and banner grabbing
 
-Service Detection: Identifies services and grabs banners (HTTP, SSH, FTP, etc.).
+-JSON and XML output
 
-Vulnerability Scanning: Flags potential CVEs based on version banners.
+-CIDR subnet support
 
-Reporting: Exports results to JSON and XML.
+Installation
 
-Network Sweep: Scans single IPs or entire CIDR ranges (e.g., 192.168.1.0/24).
+   git clone https://github.com/yourusername/advanced-port-scanner.git
+   cd advanced-port-scanner
+   
+Usage
 
-📦 Requirements  Python 3.6+
-
-Root/Admin access (required for SYN scans and OS fingerprinting).
-
-🚀 Installation
-
-No external packages needed. Just run the script:
-
-git clone https://github.com/your-username/repo.gitcd repopython3 scanner.py -h
-
-📖 Usage
-
-python3 scanner.py -t <TARGET_IP> [OPTIONS]
+   python main.py -t <target> [options]
 
 Examples
+   # Scan single host default ports (1-1024)
+      
+   python main.py -t 192.168.1.1
+   
+   # Scan full subnet with custom ports
+   
+   python main.py -t 192.168.1.0/24 -p 1-1000
+   
+   # UDP scan on specific ports
+   
+   python main.py -t 10.0.0.1 -p 22,80,443 --type udp
+   
+   # Full port scan with more threads
+   
+   python main.py -t example.com -p 1-65535 --threads 500
+   
+Options
+Option	       |         Description	           |   Default
 
-Standard Scan:
+-t,--target	  |       IP address or CIDR	      |   Required
 
-python3 scanner.py -t 192.168.1.5
+-p, --ports	  |         Port range	            |     1-1024
 
-Stealth SYN Scan (Root):
+--threads	    |       Number of threads	       |       200
 
-sudo python3 scanner.py -t 192.168.1.5 --type syn
+--type        |      	tcp, udp, or syn	        |       tcp
 
-Full Network Sweep:
+--timeout	    |       Socket timeout           |      	1.0
 
-python3 scanner.py -t 192.168.1.0/24 --threads 500
+--rate-limit  |    	Delay between scans        |      	0.01
 
-📊 Output
-
-Results are saved automatically to scan_results.json and scan_results.xml.
-
-Sample JSON Output:
-
-json
-
-{
-  "target": "192.168.1.5",
-  
-  "stats": { "open_ports": 2 },
-  
-  "results": [
-  
-   { "port": 80, "status": "open", "service": "http", "vuln": "Check nginx CVE-2021-23017" }
-  ]
-}
-
-⚠️ Use responsibly. Only scan networks you own.
