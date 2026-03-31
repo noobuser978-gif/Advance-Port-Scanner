@@ -10,7 +10,7 @@ A high-performance, multi-threaded network port scanner built with Python. Desig
 
 ## Screenshots
 
-![Screenshot](Screenshot 2026-03-31 201541.png)
+<img src="https://github.com/noobuser978-gif/Advance-Port-Scanner/blob/ad4976ad5db9f4fa338eeaf0605dc5d22e878e27/Screenshot%202026-03-31%20201541.png" alt="Alt text" width="500">
 
 
 ## Author
