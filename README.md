@@ -1,142 +1,133 @@
-# 🚀 Advanced Port Scanner v2.0
+Advanced Port Scanner v2.0
+VersionPythonLicense
 
-[![GitHub stars](https://img.shields.io/github/stars/noobuser978-gif/advanced-port-scanner?style=social)](https://github.com/noobuser978-gif/advanced-port-scanner)
-[![GitHub forks](https://img.shields.io/github/forks/noobuser978-gif/advanced-port-scanner?style=social)](https://github.com/noobuser978-gif/advanced-port-scanner)
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-[![License](https://img.shields.io/github/license/noobuser978-gif/advanced-port-scanner)](LICENSE)
+╔══════════════════════════════════════════════════════════════════════════════╗║ Advanced Port Scanner ║║ v2.0 ║║ ║║ A high-performance, multi-threaded port scanner with service detection, ║║ OS fingerprinting, and vulnerability reporting. ║╚══════════════════════════════════════════════════════════════════════════════╝
 
-<div align="center">
+Author: noobuser978-gif
 
-**A production-grade, multi-threaded port scanner with service detection, OS fingerprinting, banner grabbing, and vulnerability assessment.**
+📋 Table of Contents
+Features
+Requirements
+Installation
+Usage
+Examples
+Output Reports
+Disclaimer
+License
+✨ Features
+This tool is designed for network administrators and security enthusiasts to discover open ports and identify potential security risks.
 
-**Author: [noobuser978-gif](https://github.com/noobuser978-gif)**
+🚀 High-Performance Scanning: Utilizes multi-threading (ThreadPoolExecutor) to scan thousands of ports rapidly.
+🔍 Multiple Scan Types:
+TCP Connect: Standard full-connection scan.
+SYN Scan (Stealth): Half-open scan (requires root/admin privileges).
+UDP Scan: Probes UDP ports (service detection enabled).
+🌐 CIDR Support: Automatically scans entire subnets (e.g., 192.168.1.0/24).
+📡 Service Detection:
+Banner grabbing for HTTP, SSH, FTP, SMTP, and more.
+Automatic service identification based on port numbers.
+🛡️ Basic Vulnerability Detection: Identifies potential CVEs based on banners (e.g., Nginx, Apache, OpenSSH versions).
+💻 OS Fingerprinting: Attempts to identify the target operating system (Linux/Windows) via TCP stack analysis.
+📊 Multi-Format Reporting: Exports results to both JSON and XML files.
+⚙️ Configurable: Adjustable thread counts, timeouts, and rate-limiting to avoid triggering IDS/IPS.
+📦 Requirements
+Python 3.6 or higher
+Root/Admin Privileges (Required for SYN Stealth scans and Raw Sockets)
+Operating System: Linux, macOS, or Windows (WSL recommended for raw socket features)
+No external PyPI packages are required. This script runs on the Python Standard Library.
 
-</div>
+🚀 Installation
+Clone the repository:
+git clone https://github.com/your-username/your-repo-name.gitcd your-repo-name
+Run the script directly:
+bash
 
-## ✨ Features
+python3 scanner.py
+Note: On Linux/macOS, you may need to use sudo for SYN scans:
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Multi-Threaded Scanning** | 1000+ threads for ultra-fast scanning | ✅ |
-| **TCP SYN Stealth Scan** | Root-level stealth scanning | ✅ |
-| **UDP Scanning** | Full UDP port scanning with service probing | ✅ |
-| **Service Detection** | 50+ service fingerprints & banner grabbing | ✅ |
-| **OS Fingerprinting** | TCP/IP stack analysis | ✅ |
-| **Vulnerability Hints** | Common CVE detection | ✅ |
-| **CIDR Support** | Scan entire networks (192.168.1.0/24) | ✅ |
-| **Multiple Outputs** | JSON, XML, HTML reports | ✅ |
-| **Rate Limiting** | IDS/IPS evasion | ✅ |
-| **Nmap Compatible** | Standard output format | ✅ |
+bash
 
-## 🎯 Demo
-$ python3 advanced_scanner.py -t 192.168.1.0/24 -p top1000 --threads 500 --type syn
+sudo python3 scanner.py -t 127.0.0.1 --type syn
+📖 Usage
+bash
 
-Starting scan on 192.168.1.1
-Ports: 1000, Threads: 500
-[14:23:15] 192.168.1.1:22 open ssh
-[14:23:15] 192.168.1.1:80 open http nginx/1.18.0
-[14:23:15] 192.168.1.1:443 open https
-...
-Scan complete! Results saved to scan_results.json and scan_results.xml
-Open ports found: 15
+python3 scanner.py -t <TARGET_IP> [OPTIONS]
+Arguments
+Argument
+Short
+Required
+Description
+--target	-t	Yes	Target IP address or CIDR range (e.g., 192.168.1.5 or 10.0.0.0/24).
+--ports	-p	No	Port range to scan. Default: 1-1024. Supports formats: 80, 1-1000, 22,80,443.
+--threads		No	Number of concurrent threads. Default: 200.
+--type		No	Scan type: tcp (default), udp, or syn.
+--timeout		No	Socket timeout in seconds. Default: 1.0.
+--rate-limit		No	Delay between scans in seconds. Default: 0.01.
 
-Prerequisites
-1.Python 3.8+
-2.Linux/macOS (Windows supported with limitations)
+💡 Examples
+1. Basic TCP Scan (Common Ports)
+Scan a specific host for open ports on the default range (1-1024).
 
-INSTALLATION
-git clone https://github.com/noobuser978-gif/advanced-port-scanner.git
+bash
 
-cd advanced-port-scanner
+python3 scanner.py -t 192.168.1.10
+2. Scan Specific Ports
+Scan ports 80, 443, 8080 and 22.
 
-pip3 install -r requirements.txt  # No external dependencies!
+bash
 
-Basic Usage
-# Single host, common ports
-python3 advanced_scanner.py -t 192.168.1.1 -p 1-1024
+python3 scanner.py -t 192.168.1.10 -p 22,80,443,8080
+3. Scan a Whole Subnet (High Speed)
+Scan the entire local network using 500 threads.
 
-# Network scan, top ports, high speed
-python3 advanced_scanner.py -t 10.0.0.0/24 -p top1000 --threads 1000 --type syn
+bash
 
-# UDP scanning
-python3 advanced_scanner.py -t scanme.nmap.org -p 1-1000 --type udp
+python3 scanner.py -t 192.168.1.0/24 --threads 500
+4. Stealth SYN Scan (Requires Root)
+Perform a stealth scan (Half-open) which is harder to detect.
 
-📋 Full Command Reference
+bash
 
-python3 advanced_scanner.py -h
+sudo python3 scanner.py -t 192.168.1.10 --type syn
+5. UDP Scan with Service Detection
+Scan for open UDP services.
 
-usage: advanced_scanner.py [-h] -t TARGET [-p PORTS] [--threads THREADS] [--type TYPE] [--timeout TIMEOUT] [--rate-limit RATE_LIMIT]
+bash
 
-Advanced Port Scanner by noobuser978-gif
+python3 scanner.py -t 192.168.1.10 --type udp -p 53,67,123
+📄 Output Reports
+After the scan completes, two files are generated in the current directory:
 
-options:
+1. scan_results.json
+Contains detailed structured data including status, service, banners, and potential CVEs.
 
-  -h, --help            show this help message and exit
-  
-  -t TARGET, --target TARGET
-                        Target IP/CIDR (192.168.1.0/24)
-                        
-  -p PORTS, --ports PORTS
-                        Port range (1-1024,22,80,443, top1000)
-                        
-  --threads THREADS     Number of threads (default: 200)
-  
-  --type TYPE           Scan type: tcp, udp, syn (default: tcp)
-  
-  --timeout TIMEOUT     Socket timeout (default: 1.0)
-  
-  --rate-limit RATE_LIMIT
-                        Delay between scans (default: 0.01s)
+json
 
-🛠️ Port Specifications
-
-Spec	                    Ports	                     Use Case
-
-1-1024	              Well-known ports	          Standard scan
-
-top1000              	Most common ports	        Fast reconnaissance
-
-1-65535	                Full range	              Complete audit
-
-22,80,443,3389	        Custom list	            Targeted scanning
-
-📊 Sample Output
-scan_results.json
 {
-  "target": "192.168.1.1",
+  "target": "192.168.1.10",
   "stats": {
-    "scan_duration": "12.45s",
-    "open_ports": 5,
-    "filtered_ports": 23,
-    "total_ports": 1000
+    "scan_duration": "1.45s",
+    "open_ports": 2,
+    "total_ports": 1024
   },
   "results": [
     {
-      "port": 22,
+      "port": 80,
       "status": "open",
-      "service": "ssh",
-      "banner": "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.5",
-      "vuln": "CVE-2018-15473"
+      "service": "http",
+      "banner": "HTTP/1.1 200 OK\nServer: nginx/1.18.0...",
+      "vuln": "Check nginx CVE-2021-23017"
     }
-  ],
-  "os": {"os": "Linux/Unix"}
+  ]
 }
+2. scan_results.xml
+Standard XML format for integration with other tools or reporting systems.
 
-📈 Performance Benchmarks
-Threads	    Target	       Ports    	  Time    	Open Ports Found
-200	      192.168.1.1	    1-1000        2.1s	         5
-500	      10.0.0.0/24	    top1000	      18s	           127
-1000	  scanme.nmap.org	  1-65535	      43s	           8
+⚠️ Disclaimer
+This tool is intended for educational purposes and authorized network testing only. Scanning networks without permission is illegal. The authors are not responsible for any misuse of this software. Always obtain permission before scanning any network or device that you do not own.
 
-⚠️  FOR EDUCATIONAL & AUTHORIZED TESTING ONLY ⚠️
-This tool is for:
-✅ Authorized penetration testing
-✅ Security research
-✅ CTF competitions  
-✅ Educational purposes
-✅ Red team assessments
+📝 License
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-❌ Never use on:
-❌ Systems without explicit permission
-❌ Production environments without authorization
-❌ For malicious purposes
+
+Made with ❤️ by **noobuser978-gif**
