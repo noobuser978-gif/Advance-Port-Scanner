@@ -63,28 +63,39 @@ python3 advanced_scanner.py -t scanme.nmap.org -p 1-1000 --type udp
 
 python3 advanced_scanner.py -h
 
-usage: advanced_scanner.py [-h] -t TARGET [-p PORTS] [--threads THREADS] [--type TYPE]
-                          [--timeout TIMEOUT] [--rate-limit RATE_LIMIT]
+usage: advanced_scanner.py [-h] -t TARGET [-p PORTS] [--threads THREADS] [--type TYPE] [--timeout TIMEOUT] [--rate-limit RATE_LIMIT]
 
 Advanced Port Scanner by noobuser978-gif
 
 options:
+
   -h, --help            show this help message and exit
+  
   -t TARGET, --target TARGET
                         Target IP/CIDR (192.168.1.0/24)
+                        
   -p PORTS, --ports PORTS
                         Port range (1-1024,22,80,443, top1000)
+                        
   --threads THREADS     Number of threads (default: 200)
+  
   --type TYPE           Scan type: tcp, udp, syn (default: tcp)
+  
   --timeout TIMEOUT     Socket timeout (default: 1.0)
+  
   --rate-limit RATE_LIMIT
                         Delay between scans (default: 0.01s)
 
 🛠️ Port Specifications
+
 Spec	                    Ports	                     Use Case
+
 1-1024	              Well-known ports	          Standard scan
+
 top1000              	Most common ports	        Fast reconnaissance
+
 1-65535	                Full range	              Complete audit
+
 22,80,443,3389	        Custom list	            Targeted scanning
 
 📊 Sample Output
